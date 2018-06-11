@@ -27,7 +27,7 @@ class Register  extends React.Component{
 		if ( !this.state.email || !this.state.password || !this.state.name ){
 			console.log('Need more info to create user')
 		} else{
-			fetch('http://localhost:3001/register',{
+			fetch(' https://powerful-crag-88676.herokuapp.com/register',{
 				method : 'post',
 				headers : {'Content-Type': 'application/json'},
 				body : JSON.stringify({
