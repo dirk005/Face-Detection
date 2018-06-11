@@ -1,4 +1,5 @@
 import React from 'react';
+import './Register.css'
 
 class Register  extends React.Component{
 	
@@ -7,7 +8,9 @@ class Register  extends React.Component{
 		this.state ={
 			email : '',
 			password : '',
-			name : ''
+			name : '',
+			showWarning: false,
+			warningMSG: '',
 		}
 	}
 
@@ -25,7 +28,8 @@ class Register  extends React.Component{
 
 	onSubmitRegister = () => {
 		if ( !this.state.email || !this.state.password || !this.state.name ){
-			console.log('Need more info to create user')
+			this.setState({warningMSG: 'Need more info to create user'});
+			this.setState({showWarning: true});
 		} else{
 			fetch(' https://powerful-crag-88676.herokuapp.com/register',{
 				method : 'post',
@@ -40,15 +44,26 @@ class Register  extends React.Component{
 				if (user.id){
 					this.props.loadUser(user);
 					this.props.onRouteCahnge('home');
+				}else{
+					this.setState({warningMSG: 'User exists'});
+				this.setState({showWarning: true});
 				}
-			})	
+			})
+			.catch(err => {
+				this.setState({warningMSG: 'Error creating user'});
+				this.setState({showWarning: true});
+			})
 		}
 	}
 
-	render(){
-		
+	hideWarning = () => {
+		this.setState({showWarning: false})			
+	}
 
+	render(){
+		const {showWarning ,warningMSG} = this.state;
 		return (
+
 			<article className="br3 ba  b--black-10 mv4 w-100 w-50-m w-25-l mw6 shadow-5 center">
 				<main className="pa4 black-80">
 				  <div className="measure ">
@@ -83,7 +98,19 @@ class Register  extends React.Component{
 					        id="password"
 					        onChange={this.onPasswordChnge}
 				        />
-				      </div>			      
+				      </div>	
+				      { 
+			     		 showWarning ?
+			      			<div class="alert" id='warning' >
+ 								<span class="closebtn" onClick={this.hideWarning}>&times;</span> 
+  								<p><strong>{warningMSG}</strong></p>
+				  			</div>	
+				  			: 
+				  			<div>
+				  			</div>
+				  			    
+				 	}  
+
 				    </fieldset>
 				    <div className="">
 				      <input 

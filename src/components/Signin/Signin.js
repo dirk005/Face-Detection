@@ -1,11 +1,13 @@
 import React from 'react';
+import './SignIn.css';
 
 class Signin  extends React.Component{
 	constructor(props){
 		super(props);
 		this.state ={
 			signInEmail : '',
-			signInPassword : ''
+			signInPassword : '',
+			showWarning: false
 		}
 	}
 	onEmailChange = (event) =>{
@@ -31,13 +33,20 @@ class Signin  extends React.Component{
 			if (user.id){
 				this.props.loadUser(user);
 				this.props.onRouteCahnge('home');
+			}else{
+				this.setState({showWarning: true})
 			}
 		})		
+	}
+
+	hideWarning = () => {
+		this.setState({showWarning: false})			
 	}
 
 
 	render(){
 		const { onRouteCahnge } = this.props;
+		const {showWarning} = this.state;
 		return (
 		<article className="br3 ba  b--black-10 mv4 w-100 w-50-m w-25-l mw6 shadow-5 center">
 			<main className="pa4 black-80">
@@ -62,7 +71,18 @@ class Signin  extends React.Component{
 			        	id="password"
 			        	onChange={this.onPasswordChnge}
 			        />
-			      </div>			      
+			      </div>
+			     	{ 
+			     		 showWarning ?
+			      			<div class="alert" id='warning' >
+ 								<span class="closebtn" onClick={this.hideWarning}>&times;</span> 
+  								<p><strong>Incorrect Email or Password. </strong></p>
+				  			</div>	
+				  			: 
+				  			<div>
+				  			</div>
+				  			    
+				 	}  
 			    </fieldset>
 			    <div className="">
 			      <input 

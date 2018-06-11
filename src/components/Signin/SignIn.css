@@ -1,0 +1,25 @@
+.alert {
+    padding: 10px;
+    background-color: rgb(244, 67, 54,.6);
+    color: white;
+    border-radius: 25px;
+    border:2px solid black;
+}
+
+.closebtn {
+    margin-left: 15px;
+    color: white;
+    font-weight: bold;
+    float: right;
+    font-size: 22px;
+    line-height: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.closebtn:hover {
+    color: black;
+}
+.hideWarningStyle{
+    visibility: hidden;
+}
